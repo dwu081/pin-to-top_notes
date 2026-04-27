@@ -1,0 +1,36 @@
+html, body { height: 100%; margin: 0; }
+body { display: flex; flex-direction: column; font-family: system-ui, -apple-system, Segoe UI, Arial; }
+
+.bar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.pin {
+    padding: 6px 10px;
+    border: 1px solid #d0d0d0;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.pin.pinned {
+    border-color: #2b7cff;
+    color: #2b7cff;
+    font-weight: 600;
+}
+
+.status { color: #666; font-size: 12px; }
+
+.editor {
+    flex: 1;
+    border: none;
+    outline: none;
+    resize: none;
+    padding: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+}

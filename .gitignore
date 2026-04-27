@@ -1,0 +1,26 @@
+# dependencies
+node_modules/
+
+# build artifacts
+dist/
+out/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# env
+.env
+.env.*
+!.env.example
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# electron-builder cache / temp
+*.tsbuildinfo

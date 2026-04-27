@@ -1,0 +1,29 @@
+productName: Minimal Top Note
+appId: com.yourname.minimaltopnote
+
+directories:
+  output: dist
+
+files:
+  - src/**
+  - package.json
+
+mac:
+  category: public.app-category.productivity
+  target:
+    - dmg
+
+win:
+  target:
+    - nsis
+    - portable
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+
+linux:
+  target:
+    - AppImage
+  category: Office

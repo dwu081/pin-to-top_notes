@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self';" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minimal Top-Note</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <header class="bar">
+        <button id="pinBtn" class="pin" title="Pin to top">Pin</button>
+        <div id="status" class="status">Not pinned</div>
+    </header>
+
+    <textarea id="editor" class="editor" placeholder="在这里输入..."></textarea>
+
+    <script src="./renderer.js"></script>
+</body>
+</html>
