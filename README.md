@@ -1,46 +1,45 @@
-# minimal-top-note
+# Minimal Top Note
 
-一个最小可运行的 Electron 置顶便签应用（Always on Top + 自动保存）。
+`Minimal Top Note` 是一个基于 Electron 的轻量便签工具，核心目标是：
 
-## 项目结构
+- 快速记录
+- 一键置顶
+- 自动本地保存
 
-```text
-minimal-top-note/
-├── package.json
-├── electron-builder.yml
-├── .gitignore
-├── scripts/
-│   └── postinstall.js
-└── src/
-    ├── main.js
-    ├── preload.js
-    ├── index.html
-    ├── renderer.js
-    └── style.css
-```
+适合放在桌面常驻，用来记待办、临时想法或工作提示。
 
-## 环境要求
+## 核心功能
 
-- Node.js 18+（建议 LTS）
-- Windows / macOS / Linux
+- `Pin / Pinned`：点击按钮切换窗口是否始终置顶（Always on Top）
+- 自动保存：输入内容后会自动保存到本地文件
+- 自动恢复：下次打开应用会加载上次保存的内容
 
-## 安装依赖
+## 项目是怎么工作的
 
-> 在项目根目录执行。
+- `src/main.js`
+    - 创建 Electron 窗口
+    - 处理置顶逻辑（`setAlwaysOnTop`）
+    - 处理便签读写（保存到用户目录下 `note.txt`）
+- `src/preload.js`
+    - 通过 `contextBridge` 暴露安全 API：`window.topNote`
+- `src/renderer.js`
+    - 处理前端交互（按钮状态、输入监听、自动保存）
+- `src/index.html` + `src/style.css`
+    - 页面结构与样式
+
+## 本地运行（基础）
 
 ```powershell
 Set-Location "d:\vibe coding\note\minimal-top-note-1"
 npm.cmd install
-```
-
-## 启动应用
-
-```powershell
-Set-Location "d:\vibe coding\note\minimal-top-note-1"
 npm.cmd start
 ```
 
-## 打包应用
+## Windows 常见问题
+
+如果 PowerShell 报 `npm.ps1` 执行策略错误，优先使用 `npm.cmd`（本项目文档也统一使用这个命令）。
+
+## 打包（可选）
 
 ```powershell
 Set-Location "d:\vibe coding\note\minimal-top-note-1"
@@ -48,49 +47,4 @@ npm.cmd run dist
 npx.cmd electron-builder --win portable
 ```
 
-构建完成后，`dist` 中主要有：
-
-- `Minimal Top Note Setup 0.1.0.exe`（安装版）
-- `Minimal Top Note 0.1.0.exe`（免安装便携版，双击即用）
-
-## 发布到 GitHub（源码 + 可执行文件）
-
-1. 把源码推到 GitHub 仓库（不提交 `node_modules/` 和 `dist/`）
-2. 在 GitHub `Releases` 中上传 `dist` 产物给用户下载
-
-示例命令：
-
-```powershell
-Set-Location "d:\vibe coding\note\minimal-top-note-1"
-git init
-git add .
-git commit -m "release: v0.1.0"
-git branch -M main
-git remote add origin https://github.com/<your-username>/<your-repo>.git
-git push -u origin main
-git tag v0.1.0
-git push origin v0.1.0
-```
-
-详细流程见：`RELEASE_CHECKLIST.md`
-
-## 常见问题（Windows PowerShell）
-
-如果你看到类似“禁止运行脚本（`npm.ps1`）”错误，这是执行策略导致的。
-
-你有两种方式：
-
-1. 继续使用 `npm.cmd`（推荐，最简单）
-2. 或临时放宽当前会话策略：
-
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-npm install
-npm start
-```
-
-## 功能说明
-
-- 点击 `Pin` 切换窗口置顶（Always on Top）
-- 文本内容自动保存到 Electron 用户数据目录下的 `note.txt`
-- 重启应用后会自动加载上次内容
+打包后可执行文件在 `dist/` 目录。
