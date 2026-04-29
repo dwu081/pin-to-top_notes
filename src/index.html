@@ -11,6 +11,29 @@
     <header class="bar">
         <button id="pinBtn" class="pin" title="Pin to top">Pin</button>
         <div id="status" class="status">Not pinned</div>
+        <div class="controls">
+            <label class="control">
+                Font
+                <select id="fontFamily" class="select">
+                    <option value="Microsoft YaHei">Microsoft YaHei</option>
+                    <option value="SimSun">SimSun</option>
+                    <option value="SimHei">SimHei</option>
+                    <option value="Segoe UI">Segoe UI</option>
+                    <option value="Arial">Arial</option>
+                    <option value="system-ui">System Default</option>
+                </select>
+            </label>
+            <label class="control">
+                Weight
+                <select id="fontWeight" class="select">
+                    <option value="300">300 Light</option>
+                    <option value="400">400 Regular</option>
+                    <option value="500">500 Medium</option>
+                    <option value="600">600 Semi-Bold</option>
+                    <option value="700">700 Bold</option>
+                </select>
+            </label>
+        </div>
     </header>
 
     <textarea id="editor" class="editor" placeholder="在这里输入..."></textarea>

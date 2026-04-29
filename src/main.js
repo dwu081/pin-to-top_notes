@@ -4,13 +4,39 @@ const fs = require('fs');
 
 let mainWindow;
 
+const defaultSettings = {
+    fontFamily: 'Microsoft YaHei',
+    fontWeight: '600'
+};
+
 function getNotePath() {
     return path.join(app.getPath('userData'), 'note.txt');
+}
+
+function getSettingsPath() {
+    return path.join(app.getPath('userData'), 'settings.json');
 }
 
 function ensureNoteFile() {
     const p = getNotePath();
     if (!fs.existsSync(p)) fs.writeFileSync(p, '', 'utf8');
+}
+
+function readSettings() {
+    const p = getSettingsPath();
+    if (!fs.existsSync(p)) return { ...defaultSettings };
+    try {
+        const raw = fs.readFileSync(p, 'utf8');
+        const parsed = JSON.parse(raw);
+        return { ...defaultSettings, ...parsed };
+    } catch (err) {
+        return { ...defaultSettings };
+    }
+}
+
+function writeSettings(settings) {
+    const p = getSettingsPath();
+    fs.writeFileSync(p, JSON.stringify(settings, null, 2), 'utf8');
 }
 
 function createWindow() {
@@ -53,6 +79,7 @@ function createWindow() {
 
 app.whenReady().then(() => {
     ensureNoteFile();
+    writeSettings(readSettings());
     createWindow();
 
     app.on('activate', () => {
@@ -85,4 +112,14 @@ ipcMain.handle('saveNote', async (_evt, text) => {
     const p = getNotePath();
     fs.writeFileSync(p, text ?? '', 'utf8');
     return true;
+});
+
+ipcMain.handle('loadSettings', async () => {
+    return readSettings();
+});
+
+ipcMain.handle('saveSettings', async (_evt, settings) => {
+    const next = { ...defaultSettings, ...(settings ?? {}) };
+    writeSettings(next);
+    return next;
 });
